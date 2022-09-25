@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: basic-crud
+spec:
+  selector:
+    matchLabels:
+      app: basic-crud
+  template:
+    metadata:
+      labels:
+        app: basic-crud
+    spec:
+      containers:
+      - name: db-exercise
+        image: davidllanos0972/practice2
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3306
+      - name: react-exercise
+        image: davidllanos0972/practice2
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+      - name: flask-exercise
+        image: davidllanos0972/practice2
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 81
+
+# kubectl port-forward web-db-deployment-6586f7c5c7-qlxnw 9070:80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-exercise
+spec:
+  type: ClusterIP
+  selector:
+    app: db-exercise
+  ports:
+  - name: "mysql"
+    port: 8306
+    targetPort: 3306
+  - name: "flask"
+    port: 82
+    targetPort: 81
+  - name: "react"
+    port: 3001
+    targetPort: 3000

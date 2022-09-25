@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Untitled</title>
+    <link href="{{ url_for('static',filename='assets/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static',filename='assets/css/styles.css') }}" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <div class="table-responsive">
+        <table class="table table-striped-columns table-dark table-sm table-borderless">
+            <thead class="font-monospace text-secondary border rounded-pill border-2 border-secondary">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>&nbsp;Ciudad</th>
+                    <th>Direccion</th>
+                    <th>Salario</th>
+                </tr>
+                {% for professor in professors: %}
+                <tr>
+                    <td>
+                        {{ professor[0] }}
+                    </td>
+                    <td>
+                        {{ professor[1] }}
+                    </td>
+                    <td>
+                        {{ professor[2] }}
+                    </td>
+                    <td>
+                        {{ professor[3] }}
+                    </td>
+                    <td>
+                        {{ professor[4] }}
+                    </td>
+                    <td>
+                        {{ professor[5] }}
+                    </td>
+                    <td>
+                        <a href="{{url_for('updateprofessor2', id=professor[0])}}">Editar</a>
+                    </td><td>
+                        <button>Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <a type="button" href="{{url_for('createprofessor')}}">Crear</a>
+    <script src="{{ url_for('static',filename='assets/bootstrap/js/bootstrap.min.js') }}"></script>
+</body>
+
+</html>

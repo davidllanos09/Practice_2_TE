@@ -1,0 +1,15 @@
+#syntax=docker/dockerfile:1
+FROM ubuntu:20.04
+
+EXPOSE 3306
+ 
+RUN export DEBIAN_FRONTEND=noninteractive && \
+    apt-get update && \
+    apt-get install -y mysql-server && \
+    service mysql start && \
+    mysql -e "CREATE DATABASE example;" && \
+    mysql -e "USE example; CREATE TABLE PROFESSOR(ID int NOT NULL AUTO_INCREMENT, FIRST_NAME varchar(50), LAST_NAME varchar(50), CITY varchar(50), ADDRESS varchar(50), SALARY DECIMAL (10,2), PRIMARY KEY(ID));"  && \
+    mysql -e "CREATE USER 'example_user'@'%' IDENTIFIED BY 'mysql';"  && \
+    mysql -e "GRANT ALL ON example.* TO 'example_user'@'%';"
+RUN sed -i 's/bind-address.*/bind-address = 0.0.0.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf
+CMD ["mysqld"]

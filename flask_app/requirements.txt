@@ -1,0 +1,6 @@
+flask
+flask-mysqldb
+pymysql
+cryptography
+flask-cors
+jsonify
